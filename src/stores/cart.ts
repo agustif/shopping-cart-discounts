@@ -105,7 +105,7 @@ const createCart = () => {
       return state;
     });
   };
-  // Clears the cart
+
   const clear = () => {
     set({ items: [], total: 0, discounts: [] });
   };

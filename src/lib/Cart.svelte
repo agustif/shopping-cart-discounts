@@ -3,7 +3,9 @@
   import { formatLocalePrice } from '../utils/currency';
 </script>
 
-<section>
+<section class="cart">
+  <h2>Cart</h2>
+  <hr />
   <ul>
     {#each $cart.items as item (item.code)}
       <li>
@@ -30,6 +32,12 @@
 </section>
 
 <style>
+  .cart {
+    min-height: 80vh;
+    flex: 1;
+    border-left: 1px solid #ccc;
+    padding-left: 1rem;
+  }
   ul {
     list-style: none;
     padding: 0;
@@ -45,6 +53,7 @@
     border: 1px solid #ccc;
     border-radius: 4px;
     background: #fff;
+    color: black;
     cursor: pointer;
   }
 </style>
