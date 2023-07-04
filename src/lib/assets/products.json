@@ -1,0 +1,18 @@
+[
+    {
+      "code": "TSHIRT",
+      "name": "T-Shirt",
+      "price": 2000
+    },
+    {
+      "code": "MUG",
+      "name": "Mug",
+      "price": 750
+    },
+    {
+      "code": "CAP",
+      "name": "Cap",
+      "price": 500
+    }
+  ]
+  

@@ -1,0 +1,13 @@
+{
+    "CAP": {
+      "type": "buyXGetYFree",
+      "requiredQuantity": 3,
+      "freeQuantity": 1
+    },
+    "TSHIRT": {
+      "type": "bulkDiscount",
+      "requiredQuantity": 3,
+      "discountPercentage": 25
+    }
+  }
+  

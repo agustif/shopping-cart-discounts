@@ -1,4 +1,10 @@
 import { writable } from 'svelte/store';
+import discountsConfig from '../lib/assets/discounts.json'; // import the discounts JSON
+
+enum DiscountType {
+  BUY_X_GET_Y_FREE = 'buyXGetYFree',
+  BULK_DISCOUNT = 'bulkDiscount',
+};
 
 const createCart = () => {
   const { subscribe, set, update } = writable({
@@ -9,7 +15,6 @@ const createCart = () => {
 
   const findItem = (state, productCode) => state.items.find((item) => item.code === productCode);
   const findItemIndex = (state, productCode) => state.items.findIndex((item) => item.code === productCode);
-
   const applyDiscounts = (state) => {
     // Reset total and discounts
     state.total = 0;
@@ -19,19 +24,29 @@ const createCart = () => {
       let discount = 0;
       let total = item.price * item.quantity;
 
-      // Apply CAP discount
-      if (item.code === 'CAP' && item.quantity >= 3) {
-        const freeItems = Math.floor(item.quantity / 3);
-        discount = freeItems * item.price;
-      }
+      const discountConfig = discountsConfig[item.code];
 
-      // Apply TSHIRT discount
-      if (item.code === 'TSHIRT' && item.quantity >= 3) {
-        discount = total * 0.25;
+      if (discountConfig) {
+        switch (discountConfig.type) {
+          case DiscountType.BUY_X_GET_Y_FREE:
+            if (item.quantity >= discountConfig.requiredQuantity) {
+              const freeItems = Math.floor(item.quantity / discountConfig.requiredQuantity) * discountConfig.freeQuantity;
+              discount = freeItems * item.price;
+            }
+            break;
+          case DiscountType.BULK_DISCOUNT:
+            if (item.quantity >= discountConfig.requiredQuantity) {
+              discount = total * (discountConfig.discountPercentage / 100);
+            }
+            break;
+          default:
+            break;
+        }
       }
 
       state.total += total - discount;
       if (discount > 0) {
+        // We keep track of the discounts applied
         state.discounts.push({
           code: item.code,
           amount: discount,
@@ -41,6 +56,7 @@ const createCart = () => {
 
     return state;
   };
+
   // Adds one product item (stock/unit) to the cart
   const addItem = (product) => {
     update((state) => {
@@ -51,7 +67,7 @@ const createCart = () => {
       } else {
         state.items.push({ ...product, quantity: 1 });
       }
-
+      // Apply discounts when adding to cart
       state = applyDiscounts(state);
       return state;
     });
@@ -65,7 +81,7 @@ const createCart = () => {
       if (itemIndex !== -1) {
         state.items.splice(itemIndex, 1);
       }
-
+      // We apply the discounts again when removing from cart
       state = applyDiscounts(state);
       return state;
     });
@@ -84,12 +100,12 @@ const createCart = () => {
           state.items.splice(itemIndex, 1);
         }
       }
-
+      // We apply the discounts again when decreasing stock
       state = applyDiscounts(state);
       return state;
     });
   };
-
+  // Clears the cart
   const clear = () => {
     set({ items: [], total: 0, discounts: [] });
   };
