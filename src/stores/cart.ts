@@ -15,6 +15,8 @@ const createCart = () => {
 
   const findItem = (state, productCode) => state.items.find((item) => item.code === productCode);
   const findItemIndex = (state, productCode) => state.items.findIndex((item) => item.code === productCode);
+  
+  // Apply discounts logic
   const applyDiscounts = (state) => {
     // Reset total and discounts
     state.total = 0;
@@ -45,12 +47,20 @@ const createCart = () => {
       }
 
       state.total += total - discount;
+      const discountData = {
+        code: item.code,
+        amount: discount,
+        count: null,
+        name: item.name
+      }
+      // We keep track of the times the discount was applied for buyXGetYFree
+      if (discountConfig && discountConfig.type === DiscountType.BUY_X_GET_Y_FREE)
+      {
+        discountData.count = discount / item.price;
+      }
       if (discount > 0) {
         // We keep track of the discounts applied
-        state.discounts.push({
-          code: item.code,
-          amount: discount,
-        });
+        state.discounts.push(discountData);
       }
     });
 

@@ -5,9 +5,9 @@
 </script>
 
 <section>
+  <h1>Your cart</h1>
+  <hr />
   <div class="list">
-    <h1>Available Products</h1>
-    <hr />
     <div class="list-header">
       <h3 class="product-details-header">PRODUCT DETAILS</h3>
       <h3>QUANTITY</h3>
@@ -36,10 +36,15 @@
 </section>
 
 <style>
+  h1 {
+    font-size: 1.5rem;
+    font-weight: 400;
+    margin-bottom: 1rem;
+  }
   .list {
     display: flex;
     flex-direction: column;
-    gap: 0.4rem;
+    gap: 2rem;
     flex: 3;
   }
   .list-header, .list-item {
@@ -101,5 +106,9 @@
     font-size: 90%;
     margin-top: -12px;
     color: #A6A7B2;
+  }
+  hr {
+  border: 1px solid #DBDCE0;
+  margin: 0;
   }
 </style>

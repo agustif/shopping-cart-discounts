@@ -24,18 +24,12 @@ body {
   max-width: 1200px;
   color: black;
   margin: 0 auto;
-  padding: 0 1rem;
 }
-
+/* 
 .cart {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 1rem;
-}
+} */
 
-hr {
-  border: 1px solid #ccc;
-  margin: 0;
-}

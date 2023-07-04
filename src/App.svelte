@@ -3,15 +3,17 @@
   import { formatLocalePrice } from './utils/currency';
   import ProductList from './lib/ProductList.svelte'
   import Cart from './lib/Cart.svelte'
-  import products from './lib/assets/products.json'</script>
+  import products from './lib/assets/products.json'
+</script>
 
-  <main class="main-container">
-    <section class="product-list">
-      <ProductList products={products} />
-    </section>
+<main class="main-container">
+  <section class="product-list">
+    <ProductList products={products} />
+  </section>
+  
+  <Cart />
 
-      <Cart />
-  </main>
+</main>
 
 <style>
   .main-container {
