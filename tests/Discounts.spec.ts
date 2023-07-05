@@ -1,7 +1,7 @@
-// tests/functional/Cart.spec.ts
+// tests/functional/Discounts.spec.ts
 import { test, expect } from 'vitest'
-import { render, fireEvent } from '@testing-library/svelte'
-import Cart from '../src/components/Cart.svelte'
+import { render } from '@testing-library/svelte'
+import Discounts from '../src/components/Discounts.svelte'
 import { cart } from '../src/stores/cart'
 
 test('applies discounts correctly', async () => {
@@ -27,15 +27,16 @@ test('applies discounts correctly', async () => {
   cart.addItem(tshirt)
   cart.addItem(tshirt)
 
-  const { getByText, queryByText } = render(Cart)
-
-  // Check if items are in cart and quantities are correct
-  expect(getByText(`x3 ${cap.name}`)).toBeDefined()
-  expect(getByText(`x3 ${tshirt.name}`)).toBeDefined()
+  const { getByText, queryByText } = render(Discounts)
 
   // Check if discounts are applied
-  expect(queryByText('Discounts')).toBeDefined()
-  // Check if total price is correct
-  // Should be 200*3*0.75 (t-shirts with discount) + 100*2 (caps, one is free)
-  console.log(queryByText('Total: $650'))
+  expect(queryByText('Discounts')).toBeNull()
+console.log("discounts:",queryByText('Discounts'))
+  // Check if discount details are correct
+  expect(getByText(`x1 ${cap.name} offer`)).toBeNull()
+  expect(getByText(`x1 ${tshirt.name} offer`)).toBeNull()
+
+  // Check if total savings are correct
+  // Should be 100 (one cap is free) + 200*3*0.25 (25% off for t-shirts)
+  expect(getByText('Total savings: -250,00 €')).toBeNull()
 })

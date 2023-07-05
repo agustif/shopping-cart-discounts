@@ -8,13 +8,13 @@ enum DiscountType {
 };
 
 const createCart = () => {
-  // Try to load the cart from localStorage
   let initialState = {
     items: [],
     total: 0,
     discounts: [],
     showConfirm: false,
   };
+  // Try to load the cart from localStorage
   const savedCart = localStorage.getItem('cart');
   if (savedCart) {
     initialState = JSON.parse(savedCart);

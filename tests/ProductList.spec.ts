@@ -16,7 +16,7 @@ test('adds item to cart from product list', async () => {
   await fireEvent.click(plusButtons[0])
 
   // Check if item was added to cart
-  const items = get(cart).items
+  const items = get(cart).items as any[]
 //   expect(items.find(item => item && item.code === 'TSHIRT')).toBeDefined()
   const addedItem = items.find(item => item.code === 'TSHIRT')
   expect(addedItem).toStrictEqual({
