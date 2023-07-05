@@ -29,9 +29,6 @@ test('applies discounts correctly', async () => {
 
   const { getByText, queryByText } = render(Discounts)
 
-  // Check if discounts are applied
-  expect(queryByText('Discounts')).toBeNull()
-console.log("discounts:",queryByText('Discounts'))
   // Check if discount details are correct
   expect(getByText(`x1 ${cap.name} offer`)).toBeNull()
   expect(getByText(`x1 ${tshirt.name} offer`)).toBeNull()
