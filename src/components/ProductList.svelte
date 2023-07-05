@@ -1,16 +1,28 @@
 <script lang="ts">
+  import { onMount } from 'svelte';
   import { cart } from '../stores/cart';
   import { formatLocalePrice } from '../utils/currency';
-    import Heading from './Heading.svelte';
+  import Heading from './Heading.svelte';
   import ProductItemDetail from './ProductItemDetail.svelte';
   export let products;
   let selectedProduct = null;
 
-  function getTotalPrice(product) {
+  const getTotalPrice = (product) => {
     const item = $cart.items.find(item => item.code === product.code);
     const quantity = item ? item.quantity : 0;
     return formatLocalePrice(quantity * product.price);
   }
+
+onMount(() => {
+  const productCodes = ['CAP', 'MUG', 'TSHIRT'];
+  productCodes.forEach((code) => {
+    const link = document.createElement('link');
+    link.rel = 'preload';
+    link.as = 'image';
+    link.href = `${code}.jpg`;
+    document.head.appendChild(link);
+  });
+});
 </script>
 
 <section class="product-list">
