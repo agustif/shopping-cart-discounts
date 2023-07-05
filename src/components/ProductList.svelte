@@ -17,8 +17,8 @@
       <h3>TOTAL</h3>
     </div>
     {#each products as product (product.code)}
-    <div class="list-item" on:click={() => selectedProduct = product} on:keydown={(e) => {if (e.key === 'Enter') selectedProduct = product}}>
-        <div class="product-details">
+    <div class="list-item">
+        <div class="product-details" on:click={() => selectedProduct = product} on:keydown={(e) => {if (e.key === 'Enter') selectedProduct = product}}>
           <img src={`${product.code}_thumb.png`} alt={product.name} />
           <div>
             <p class="product-title">{product.name}</p>
@@ -91,6 +91,7 @@
     text-align: left;
   }
   .product-details {
+    cursor: pointer;
     display: flex;
     align-items: center;
     flex: 2;

@@ -44,7 +44,7 @@
       <h3>Total discount</h3><p> {formatLocalePrice(totalDiscount)}</p>
     </div>
     {#if !showModal}
-    <button on:click={() => showModal = true}>Checkout</button>
+    <button on:disabled={$cart.total > 0} on:click={() => showModal = true}>Checkout</button>
     {/if}
 
   </div>
