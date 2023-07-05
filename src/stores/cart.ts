@@ -1,17 +1,25 @@
 import { writable } from 'svelte/store';
 import discountsConfig from '../config/discounts.json'; // import the discounts JSON
 
+
 enum DiscountType {
   BUY_X_GET_Y_FREE = 'buyXGetYFree',
   BULK_DISCOUNT = 'bulkDiscount',
 };
 
 const createCart = () => {
-  const { subscribe, set, update } = writable({
+  // Try to load the cart from localStorage
+  let initialState = {
     items: [],
     total: 0,
     discounts: [],
-  });
+  };
+  const savedCart = localStorage.getItem('cart');
+  if (savedCart) {
+    initialState = JSON.parse(savedCart);
+  }
+
+  const { subscribe, set, update } = writable(initialState);
 
   const findItem = (state, productCode) => state.items.find((item) => item.code === productCode);
   const findItemIndex = (state, productCode) => state.items.findIndex((item) => item.code === productCode);
@@ -120,6 +128,13 @@ const createCart = () => {
     set({ items: [], total: 0, discounts: [] });
   };
 
+   // Subscribe to changes in the cart
+   subscribe(value => {
+    // Save the current state of the cart to localStorage
+    localStorage.setItem('cart', JSON.stringify(value));
+  });
+
+  
   return {
     subscribe,
     addItem,
