@@ -4,9 +4,9 @@ This is a robust shopping cart application developed using Svelte, TypeScript, a
 
 
 ## Screenshots
-![Empty cart](./screenshots/CartEmpty.png)
-![Cart with discounts](./screenshots/CartDiscounts.png)
-![Product Modal Detail View](./screenshots/ProductModal.png)
+![Empty cart](./screenshot/CartEmpty.png)
+![Cart with discounts](./screenshot/CartDiscounts.png)
+![Product Modal Detail View](./screenshot/ProductModal.png)
 
 ## Key Features
 
