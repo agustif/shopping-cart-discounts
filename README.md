@@ -2,6 +2,12 @@
 
 This is a robust shopping cart application developed using Svelte, TypeScript, and Vite. The application provides a seamless shopping experience, allowing users to add items to a shopping cart, apply discounts, and proceed to checkout.
 
+
+## Screenshots
+![Empty cart](./screenshots/CartEmpty.png)
+![Cart with discounts](./screenshots/CartDiscounts.png)
+![Product Modal Detail View](./screenshots/ProductModal.png)
+
 ## Key Features
 
 - **Add Items to Cart**: Users can add items to the shopping cart with ease.
@@ -17,7 +23,7 @@ The codebase is organized into several key directories:
 
 - `src`: Contains the main application code, including Svelte components and the shopping cart store.
 - `tests`: Contains unit and functional tests for the application.
-- `src/configs`: Contains JSON files for products and discounts.
+- `src/config`: Contains JSON files for products and discounts.
 
 ## Modifying Products and Discounts
 
