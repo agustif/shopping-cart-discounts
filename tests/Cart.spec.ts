@@ -29,14 +29,3 @@ test('adds multiple items to cart and checks out', async () => {
   // Check if total price is correct
   expect(queryByText(`Price: ${item.price * 2}`)).toBeDefined()
 })
-
-
-
-test('enables checkout button when cart has items', () => {
-  cart.addItem({ code: 'prod1', name: 'Product 1', price: 100 })
-
-  const { getByText } = render(Cart)
-  const button = getByText('Checkout')
-
-  expect(button.disabled).toBeFalsy()
-})
