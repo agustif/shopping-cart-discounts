@@ -12,7 +12,7 @@
     const quantity = item ? item.quantity : 0;
     return formatLocalePrice(quantity * product.price);
   }
-
+// Preload product images
 onMount(() => {
   const productCodes = ['CAP', 'MUG', 'TSHIRT'];
   productCodes.forEach((code) => {
@@ -23,6 +23,14 @@ onMount(() => {
     document.head.appendChild(link);
   });
 });
+// Listen for `escape` and close the modal
+const handleKeydown = (event) => {
+      if (event.key === 'Escape') {
+        selectedProduct = null;
+      }
+    };
+
+window.addEventListener('keydown', handleKeydown);
 </script>
 
 <section class="product-list">
