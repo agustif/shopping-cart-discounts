@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { escape } from 'svelte/internal';
   import { cart } from '../stores/cart';
   import { formatLocalePrice } from '../utils/currency';
   import ProductItemDetail from './ProductItemDetail.svelte';

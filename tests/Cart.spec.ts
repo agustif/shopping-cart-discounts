@@ -1,7 +1,7 @@
 // tests/functional/Cart.spec.ts
 import { test, expect } from 'vitest'
 import { render, fireEvent } from '@testing-library/svelte'
-import Cart from '../src/lib/Cart.svelte'
+import Cart from '../src/components/Cart.svelte'
 import { cart } from '../src/stores/cart'
 
 test('adds multiple items to cart and checks out', async () => {

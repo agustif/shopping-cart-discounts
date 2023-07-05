@@ -1,6 +1,6 @@
 import { test, expect } from 'vitest'
 import { render } from '@testing-library/svelte'
-import ProductItemDetail from '../src/lib/ProductItemDetail.svelte'
+import ProductItemDetail from '../src/components/ProductItemDetail.svelte'
 import { formatLocalePrice } from "../src/utils/currency";
 test('renders product details correctly', () => {
     const product = {

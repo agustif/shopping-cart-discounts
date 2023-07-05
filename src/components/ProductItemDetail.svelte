@@ -1,7 +1,6 @@
-<!-- ProductItemDetail.svelte -->
-<script>
-    export let product;
+<script lang="ts">
     import { formatLocalePrice } from '../utils/currency';
+    export let product;
   </script>
   
   <div class="product-detail">

@@ -1,10 +1,5 @@
 import { writable } from 'svelte/store';
-import discountsConfig from '../lib/assets/discounts.json'; // import the discounts JSON
-
-enum DiscountType {
-  BUY_X_GET_Y_FREE = 'buyXGetYFree',
-  BULK_DISCOUNT = 'bulkDiscount',
-};
+import discountsConfig from '../config/discounts.json'; // import the discounts JSON
 
 const createCart = () => {
   const { subscribe, set, update } = writable({
@@ -29,6 +24,11 @@ const createCart = () => {
       const discountConfig = discountsConfig[item.code];
 
       if (discountConfig) {
+        enum DiscountType {
+          BUY_X_GET_Y_FREE = 'buyXGetYFree',
+          BULK_DISCOUNT = 'bulkDiscount',
+        };
+        
         switch (discountConfig.type) {
           case DiscountType.BUY_X_GET_Y_FREE:
             if (item.quantity >= discountConfig.requiredQuantity) {

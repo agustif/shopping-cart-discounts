@@ -1,14 +1,11 @@
 <script lang="ts">
   import { cart } from '../stores/cart';
   import { formatLocalePrice } from '../utils/currency';
+
   let totalDiscount = 0;
   let showModal = false;
-
-// Recalculate total discount amount whenever $cart.discounts changes
-$: totalDiscount = $cart.discounts.reduce((total, discount) => total + discount.amount, 0);
-const handleCheckout = () => {
-    showModal = true;
-  };
+  // Recalculate total discount amount whenever $cart.discounts changes
+  $: totalDiscount = $cart.discounts.reduce((total, discount) => total + discount.amount, 0);
 </script>
 
 <section class="cart">
@@ -47,7 +44,7 @@ const handleCheckout = () => {
       <h3>Total discount</h3><p> {formatLocalePrice(totalDiscount)}</p>
     </div>
     {#if !showModal}
-    <button on:click={handleCheckout}>Checkout</button>
+    <button on:click={() => showModal = true}>Checkout</button>
     {/if}
 
   </div>

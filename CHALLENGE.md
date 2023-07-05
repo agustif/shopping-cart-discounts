@@ -52,11 +52,11 @@ Total: 62.50€
 
 ### Bonus Points For
 
-* Unit tests
-* Functional tests
-* Dealing with money as integers
-* Formatting money output
-* Useful comments
-* Documentation
-* Docker images / CI
-* Commit messages
+* [x] Unit tests
+* [x] Functional tests
+* [x] Dealing with money as integers
+* [x] Formatting money output
+* [x] Useful comments
+* [x] Documentation 
+* [x] Docker images / CI
+* [x] Commit messages
