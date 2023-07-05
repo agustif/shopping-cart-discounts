@@ -1,14 +1,20 @@
 <script lang="ts">
   import { cart } from '../stores/cart';
   import { formatLocalePrice } from '../utils/currency';
+    import Heading from './Heading.svelte';
   import ProductItemDetail from './ProductItemDetail.svelte';
   export let products;
   let selectedProduct = null;
+
+  function getTotalPrice(product) {
+    const item = $cart.items.find(item => item.code === product.code);
+    const quantity = item ? item.quantity : 0;
+    return formatLocalePrice(quantity * product.price);
+  }
 </script>
 
-<section>
-  <h1>Your cart</h1>
-  <hr />
+<section class="product-list">
+  <Heading>Your cart</Heading>
   <div class="list">
     <div class="list-header">
       <h3 class="product-details-header">PRODUCT DETAILS</h3>
@@ -22,7 +28,7 @@
           <img src={`${product.code}_thumb.png`} alt={product.name} />
           <div>
             <p class="product-title">{product.name}</p>
-            <p class="product-code-text">Product code <span class="product-code">{Math.random().toString(36).slice(2, 7)}</span></p>
+            <p class="product-code-text">Product code <span class="product-code">{product.code}</span></p>
           </div>
         </div>
         <div class="quantity">
@@ -31,7 +37,7 @@
           <button on:click={() => cart.addItem(product)}>+</button>
         </div>
         <div class="price">{formatLocalePrice(product.price)}</div>
-        <div class="total">{formatLocalePrice(($cart.items.find(item => item.code === product.code)?.quantity || 0) * product.price)}</div>
+        <div class="total">{getTotalPrice(product)}</div>
       </div>
     {/each}
   </div>
@@ -46,8 +52,11 @@
   {/if}
 </section>
 
-
 <style>
+  .product-list {
+    flex: 3;
+    margin: 2rem;
+  }
   .close-product{
     position: fixed;
     top: 50px;
@@ -60,11 +69,7 @@
     padding: 1rem;
     cursor: pointer;
   }
-  h1 {
-    font-size: 1.5rem;
-    font-weight: 400;
-    margin-bottom: 1rem;
-  }
+
   .list {
     display: flex;
     flex-direction: column;
@@ -131,10 +136,6 @@
     font-size: 90%;
     margin-top: -12px;
     color: #A6A7B2;
-  }
-  hr {
-  border: 1px solid #DBDCE0;
-  margin: 0;
   }
 
   .modal {
