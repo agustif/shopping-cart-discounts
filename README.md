@@ -65,7 +65,8 @@ To run the application, follow these steps:
 3. Install the dependencies: `npm install`
 4. Start the development server: `npm run dev`
 
-The application will be available at `http://localhost:5000`.
+The application will be available at `http://localhost:5xxx`.
+
 
 To run the tests, use the following command: `npm run test`
 
