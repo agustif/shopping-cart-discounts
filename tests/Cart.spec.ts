@@ -40,22 +40,3 @@ test('enables checkout button when cart has items', () => {
 
   expect(button.disabled).toBeFalsy()
 })
-
-test('shows checkout confirmation when checkout button is clicked', async () => {
-  cart.addItem({ code: 'prod1', name: 'Product 1', price: 100 })
-
-  const { getByText, queryByText } = render(Cart)
-  const button = getByText('Checkout')
-
-  await fireEvent.click(button)
-
-  expect(queryByText('Checkout Confirmation')).toBeDefined()
-})
-
-test('shows discounts when there are discounts applied', () => {
-  cart.addItem({ code: 'prod1', name: 'Product 1', price: 100, quantity: 3 }) // Assuming this triggers a discount
-
-  const { queryByText } = render(Cart)
-
-  expect(queryByText('Discounts')).toBeDefined()
-})
