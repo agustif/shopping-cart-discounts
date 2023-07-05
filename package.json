@@ -1,5 +1,5 @@
 {
-  "name": "myapp",
+  "name": "shopping-cart-discounts-app",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -7,15 +7,21 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "check": "svelte-check --tsconfig ./tsconfig.json"
+    "test": "vitest",
+    "check": "svelte-check --tsconfig ./tsconfig.json",
+    "docker:build": "docker build -t shopping-cart-discounts-app .",
+    "docker:run": "docker run -p 8080:80 shopping-cart-discounts-app"
   },
   "devDependencies": {
-    "@sveltejs/vite-plugin-svelte": "^2.0.4",
+    "@sveltejs/vite-plugin-svelte": "^2.4.2",
+    "@testing-library/svelte": "^4.0.3",
     "@tsconfig/svelte": "^4.0.1",
+    "jsdom": "^22.1.0",
     "svelte": "^3.58.0",
     "svelte-check": "^3.3.1",
     "tslib": "^2.5.0",
     "typescript": "^5.0.2",
-    "vite": "^4.3.9"
+    "vite": "^4.3.9",
+    "vitest": "^0.32.4"
   }
 }

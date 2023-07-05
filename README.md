@@ -1,47 +1,161 @@
-# Svelte + TS + Vite
+# Shopping Cart Application with Svelte + TypeScript + Vite
 
-This template should help get you started developing with Svelte and TypeScript in Vite.
+This is a robust shopping cart application developed using Svelte, TypeScript, and Vite. The application provides a seamless shopping experience, allowing users to add items to a shopping cart, apply discounts, and proceed to checkout.
 
-## Recommended IDE Setup
+## Key Features
 
-[VS Code](https://code.visualstudio.com/) + [Svelte](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode).
+- **Add Items to Cart**: Users can add items to the shopping cart with ease.
+- **Discount Application**: The application supports automatic application of discounts based on predefined rules.
+- **Checkout Functionality**: Users can proceed to checkout, with the application calculating the total cost after discounts.
 
-## Need an official Svelte framework?
+## Stack
 
-Check out [SvelteKit](https://github.com/sveltejs/kit#readme), which is also powered by Vite. Deploy anywhere with its serverless-first approach and adapt to various platforms, with out of the box support for TypeScript, SCSS, and Less, and easily-added support for mdsvex, GraphQL, PostCSS, Tailwind CSS, and more.
+This was my first application built with Svelte, TypeScript, and Vite. It uses Svelte stores for state management and Vite for building and serving the application. The application also uses Vitest for testing.
+## Codebase Structure
 
-## Technical considerations
+The codebase is organized into several key directories:
 
-**Why use this over SvelteKit?**
+- `src`: Contains the main application code, including Svelte components and the shopping cart store.
+- `tests`: Contains unit and functional tests for the application.
+- `assets`: Contains JSON files for products and discounts.
 
-- It brings its own routing solution which might not be preferable for some users.
-- It is first and foremost a framework that just happens to use Vite under the hood, not a Vite app.
+## Modifying Products and Discounts
 
-This template contains as little as possible to get started with Vite + TypeScript + Svelte, while taking into account the developer experience with regards to HMR and intellisense. It demonstrates capabilities on par with the other `create-vite` templates and is a good starting point for beginners dipping their toes into a Vite + Svelte project.
+Products and discounts can be easily modified by editing the corresponding JSON files in the `assets` directory:
 
-Should you later need the extended capabilities and extensibility provided by SvelteKit, the template has been structured similarly to SvelteKit so that it is easy to migrate.
+- `products.json`: Defines the available products. Each product has a `code`, `name`, and `price`.
+- `discounts.json`: Defines the discount rules. Each rule has a `type` and parameters specific to the type.
 
-**Why `global.d.ts` instead of `compilerOptions.types` inside `jsconfig.json` or `tsconfig.json`?**
+For example, to add a new product, you would add a new object to the `products.json` file:
 
-Setting `compilerOptions.types` shuts out all other types not explicitly listed in the configuration. Using triple-slash references keeps the default TypeScript setting of accepting type information from the entire workspace, while also adding `svelte` and `vite/client` type information.
+```json
+{
+  "code": "NEWPROD",
+  "name": "New Product",
+  "price": 500
+}
+```
 
-**Why include `.vscode/extensions.json`?**
+To add a new discount rule, you would add a new property to the `discounts.json` file:
 
-Other templates indirectly recommend extensions via the README, but this file allows VS Code to prompt the user to install the recommended extension upon opening the project.
+```json
+{
+  "NEWPROD": {
+    "type": "bulkDiscount",
+    "requiredQuantity": 2,
+    "discountPercentage": 50
+  }
+}
+```
 
-**Why enable `allowJs` in the TS template?**
+This rule would apply a 50% discount to the "New Product" when two or more are added to the cart.
 
-While `allowJs: false` would indeed prevent the use of `.js` files in the project, it does not prevent the use of JavaScript syntax in `.svelte` files. In addition, it would force `checkJs: false`, bringing the worst of both worlds: not being able to guarantee the entire codebase is TypeScript, and also having worse typechecking for the existing JavaScript. In addition, there are valid use cases in which a mixed codebase may be relevant.
+## Running the Application
 
-**Why is HMR not preserving my local component state?**
+To run the application, follow these steps:
 
-HMR state preservation comes with a number of gotchas! It has been disabled by default in both `svelte-hmr` and `@sveltejs/vite-plugin-svelte` due to its often surprising behavior. You can read the details [here](https://github.com/rixo/svelte-hmr#svelte-hmr).
+1. Clone the repository: `git clone https://github.com/your-repo/shopping-cart.git`
+2. Navigate to the project directory: `cd shopping-cart`
+3. Install the dependencies: `npm install`
+4. Start the development server: `npm run dev`
 
-If you have state that's important to retain within a component, consider creating an external store which would not be replaced by HMR.
+The application will be available at `http://localhost:5000`.
+
+To run the tests, use the following command: `npm run test`
+
+## Discounts
+
+The application supports the following discount rules:
+
+- **CAP**: Buy 3, get 1 free. When a user adds four "CAP" items to the cart, the price of one is deducted.
+- **TSHIRT**: Bulk discount. When a user buys three or more "TSHIRT" items, a 25% discount is applied to all "TSHIRT" items.
+
+These rules are applied automatically when the relevant items are added to the cart. The application calculates the total cost after discounts during checkout.
+
+
+## Extending Discounts
+
+The application currently supports two types of discounts: "buy X get Y free" and "bulk discount". These are defined in the `DiscountType` enum in `src/stores/cart.ts`:
 
 ```ts
-// store.ts
-// An extremely simple external store
-import { writable } from 'svelte/store'
-export default writable(0)
+enum DiscountType {
+  BUY_X_GET_Y_FREE = 'buyXGetYFree',
+  BULK_DISCOUNT = 'bulkDiscount',
+};
 ```
+
+The logic for applying these discounts is implemented in the `calculateTotal` function in the same file:
+
+```ts
+if (discountConfig) {
+  switch (discountConfig.type) {
+    case DiscountType.BUY_X_GET_Y_FREE:
+      if (item.quantity >= discountConfig.requiredQuantity) {
+        const freeItems = Math.floor(item.quantity / discountConfig.requiredQuantity) * discountConfig.freeQuantity;
+        discount = freeItems * item.price;
+      }
+      break;
+    case DiscountType.BULK_DISCOUNT:
+      if (item.quantity >= discountConfig.requiredQuantity) {
+        discount = total * (discountConfig.discountPercentage / 100);
+      }
+      break;
+    default:
+      break;
+  }
+}
+```
+If you want to add more types of discounts, you can do so by extending the `DiscountType` enum and adding the corresponding logic in the `calculateTotal` function. For example, to add a "percentage off" discount, you could do the following:
+
+1. Add a new type to the `DiscountType` enum:
+
+```ts
+enum DiscountType {
+  BUY_X_GET_Y_FREE = 'buyXGetYFree',
+  BULK_DISCOUNT = 'bulkDiscount',
+  PERCENTAGE_OFF = 'percentageOff',
+};
+```
+
+2. Add the corresponding logic in the `calculateTotal` function:
+
+```ts
+case DiscountType.PERCENTAGE_OFF:
+  discount = total * (discountConfig.discountPercentage / 100);
+  break;
+```
+
+3. Add the new discount rule to the `discounts.json` file:
+
+```json
+{
+  "NEWPROD": {
+    "type": "percentageOff",
+    "discountPercentage": 20
+  }
+}
+```
+
+This rule would apply a 20% discount to the "New Product".
+
+
+## Docker
+
+You can also run this application using Docker. First, build the Docker image:
+
+```bash
+npm run docker:build
+```
+
+This will create a Docker image named `shopping-cart-discounts-app`.
+
+Then, you can run the application:
+
+```bash
+npm run docker:run
+```
+
+This will start the application and make it available at `http://localhost:8080`.
+
+
+* Please note that Docker needs to be installed and running on your machine to build and run the Docker image.

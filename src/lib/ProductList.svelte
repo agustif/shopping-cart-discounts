@@ -1,7 +1,10 @@
 <script lang="ts">
+  import { escape } from 'svelte/internal';
   import { cart } from '../stores/cart';
   import { formatLocalePrice } from '../utils/currency';
+  import ProductItemDetail from './ProductItemDetail.svelte';
   export let products;
+  let selectedProduct = null;
 </script>
 
 <section>
@@ -15,7 +18,7 @@
       <h3>TOTAL</h3>
     </div>
     {#each products as product (product.code)}
-      <div class="list-item">
+    <div class="list-item" on:click={() => selectedProduct = product} on:keydown={(e) => {if (e.key === 'Enter') selectedProduct = product}}>
         <div class="product-details">
           <img src={`${product.code}_thumb.png`} alt={product.name} />
           <div>
@@ -33,9 +36,31 @@
       </div>
     {/each}
   </div>
+
+  {#if selectedProduct}
+    <div class="modal">
+      <div class="modal-content">
+        <button class="close-product" on:click={() => selectedProduct = null}><img src="cross.svg" alt="Close product" /></button>
+        <ProductItemDetail product={selectedProduct} />
+      </div>
+    </div>
+  {/if}
 </section>
 
+
 <style>
+  .close-product{
+    position: fixed;
+    top: 50px;
+    right: 10%;
+    background: none;
+    border: none;
+    color: #6E51F6;
+    font-size: 80%;
+    font-weight: 300;
+    padding: 1rem;
+    cursor: pointer;
+  }
   h1 {
     font-size: 1.5rem;
     font-weight: 400;
@@ -110,5 +135,23 @@
   hr {
   border: 1px solid #DBDCE0;
   margin: 0;
+  }
+
+  .modal {
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+  }
+
+  .modal-content {
+    background-color: #fefefe;
+    margin: 3% auto;
+    border: 1px solid #888;
+    width: 80%;
   }
 </style>

@@ -2,6 +2,7 @@
   import { cart } from './stores/cart';
   import { formatLocalePrice } from './utils/currency';
   import ProductList from './lib/ProductList.svelte'
+  
   import Cart from './lib/Cart.svelte'
   import products from './lib/assets/products.json'
 </script>
