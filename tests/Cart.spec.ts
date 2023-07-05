@@ -34,7 +34,7 @@ test('adds multiple items to cart and checks out', async () => {
 
 test('disables checkout button when cart is empty', () => {
   const { getByText } = render(Cart)
-  const button = getByText('Add items to cart') as HTMLButtonElement
+  const button = getByText('Add items to cart')
 
   expect(button.disabled).toBeTruthy()
 })
@@ -43,7 +43,7 @@ test('enables checkout button when cart has items', () => {
   cart.addItem({ code: 'prod1', name: 'Product 1', price: 100 })
 
   const { getByText } = render(Cart)
-  const button = getByText('Checkout') as HTMLButtonElement
+  const button = getByText('Checkout')
 
   expect(button.disabled).toBeFalsy()
 })
