@@ -17,7 +17,7 @@ The codebase is organized into several key directories:
 
 - `src`: Contains the main application code, including Svelte components and the shopping cart store.
 - `tests`: Contains unit and functional tests for the application.
-- `assets`: Contains JSON files for products and discounts.
+- `src/configs`: Contains JSON files for products and discounts.
 
 ## Modifying Products and Discounts
 
