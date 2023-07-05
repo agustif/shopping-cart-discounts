@@ -13,6 +13,7 @@ const createCart = () => {
     items: [],
     total: 0,
     discounts: [],
+    showConfirm: false,
   };
   const savedCart = localStorage.getItem('cart');
   if (savedCart) {
@@ -125,9 +126,15 @@ const createCart = () => {
   };
 
   const clear = () => {
-    set({ items: [], total: 0, discounts: [] });
+    set({ items: [], total: 0, discounts: [], showConfirm: false });
   };
 
+  const showConfirm = () => {
+    update((state) => {
+      state.showConfirm = true;
+      return state;
+    });
+  };
    // Subscribe to changes in the cart
    subscribe(value => {
     // Save the current state of the cart to localStorage
@@ -141,6 +148,7 @@ const createCart = () => {
     removeItem,
     decreaseItem,
     clear,
+    showConfirm,
   };
 };
 
