@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import Button from "./Button.svelte"
   import { formatLocalePrice } from '../utils/currency';
   import { cart } from '../stores/cart';
