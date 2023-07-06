@@ -27,7 +27,7 @@ The codebase is organized into several key directories:
 
 ## Modifying Products and Discounts
 
-Products and discounts can be easily modified by editing the corresponding JSON files in the `assets` directory:
+Products and discounts can be easily modified by editing the corresponding JSON files in the `src/config` directory:
 
 - `products.json`: Defines the available products. Each product has a `code`, `name`, and `price`.
 - `discounts.json`: Defines the discount rules. Each rule has a `type` and parameters specific to the type.
