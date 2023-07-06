@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import { cart } from '../stores/cart';
   import { formatLocalePrice } from '../utils/currency';
 
