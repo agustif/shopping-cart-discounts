@@ -11,8 +11,6 @@
     padding: 0.75rem 1rem;
     border: 1px solid #ccc;
     border-radius: 4px;
-    background: #fff;
-    color: black;
     cursor: pointer;
     justify-self: center;
     width: 100%;
